@@ -11,7 +11,8 @@ import { Component } from '@angular/core';
       <li *ngFor="let item of sampleArray">{{ item }}</li>
     </ul>
     <!-- *ngIf structural directive; else usage -->
-    <p *ngIf="sampleBoolean; else noTmpl">Variable sampleBoolean it's true</p>
+    <p *ngIf="sampleBoolean; then yesTmpl else noTmpl"></p>
+    <ng-template #yesTmpl>Variable sampleBoolean it's true</ng-template>
     <ng-template #noTmpl>Variable sampleBoolean it's false</ng-template>
   `,
   styleUrls: ['./app.component.css']
@@ -24,5 +25,5 @@ export class AppComponent {
     location: 'USA',
   }
   sampleArray = ['Foo', 'Bar', 'Foo'];
-  sampleBoolean = true;
+  sampleBoolean = false;
 }
