@@ -20,8 +20,9 @@ import { Component } from '@angular/core';
       <img width="100" [src]="angularLogoPath">
       <img width="100" bind-src="angularLogoPath">
     </div>
+    <!-- Event binding -->
     <div>
-      Button status controlled by property binding: <button [disabled]="isButtonDisabled">Button</button>
+      Button status controlled by property binding: <button [disabled]="isButtonDisabled" (click)="onButtonClick($event)">Button</button>
     </div>
   `,
   styleUrls: ['./app.component.css']
@@ -36,5 +37,9 @@ export class AppComponent {
   sampleArray = ['Foo', 'Bar', 'Foo'];
   sampleBoolean = false;
   angularLogoPath = 'https://angular.io/assets/images/logos/angular/angular.svg';
-  isButtonDisabled = true;
+  isButtonDisabled = false;
+
+  onButtonClick(event) {
+    console.log("Event", event);
+  }
 }
