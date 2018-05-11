@@ -24,8 +24,27 @@ import { Component } from '@angular/core';
     <div>
       Button status controlled by property binding: <button [disabled]="isButtonDisabled" (click)="onButtonClick($event)">Button</button>
     </div>
+    <!-- CSS handling -->
+    <p 
+      [style.color]="redColorValue" 
+      [ngStyle]="redUnderlinedStyle" 
+      [class.largeFont]="true" 
+      [ngClass]="customePointerClasses">
+        Hello World!
+    </p>
   `,
-  styleUrls: ['./app.component.css']
+  styles: [`
+    .largeFont {
+      font-size: 25px !important;
+    }
+    .pointer {
+      cursor: pointer;
+    }
+    .italic {
+      font-style: italic;
+    }
+  `],
+  // styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'app';
@@ -38,6 +57,15 @@ export class AppComponent {
   sampleBoolean = false;
   angularLogoPath = 'https://angular.io/assets/images/logos/angular/angular.svg';
   isButtonDisabled = false;
+  redColorValue = 'red';
+  redUnderlinedStyle = {
+    'color': 'red',
+    'text-decoration': 'underline',
+  }
+  customePointerClasses = {
+    pointer: true,
+    italic: true,
+  }
 
   onButtonClick(event) {
     console.log("Event", event);
