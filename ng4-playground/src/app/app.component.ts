@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -29,9 +30,22 @@ import { Component } from '@angular/core';
       [style.color]="redColorValue" 
       [ngStyle]="redUnderlinedStyle" 
       [class.largeFont]="true" 
-      [ngClass]="customePointerClasses">
+      [ngClass]="customPointerClasses">
         Hello World!
     </p>
+    <!-- Data fetched from service -->
+    <div>
+      Content of array returned from service:
+      <ul>
+        <li *ngIf="fetchedData.length; then listItemTmpl else emptyItemTmpl"></li>
+        <ng-template #listItemTmpl>
+          <li *ngFor="let item of fetchedData">{{ item }}</li>
+        </ng-template>
+        <ng-template #emptyItemTmpl>
+          <li>Data from service is empty or loading</li>
+        </ng-template>
+        </ul>
+    </div>
   `,
   styles: [`
     .largeFont {
@@ -46,7 +60,7 @@ import { Component } from '@angular/core';
   `],
   // styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
   sampleObject = {
     gender: 'male',
@@ -62,9 +76,18 @@ export class AppComponent {
     'color': 'red',
     'text-decoration': 'underline',
   }
-  customePointerClasses = {
+  customPointerClasses = {
     pointer: true,
     italic: true,
+  }
+  fetchedData = [];
+
+  constructor(private _dataService:DataService) { }
+
+  ngOnInit() {
+    this._dataService.returnSampleData().then(data => {
+      this.fetchedData = data;
+    })
   }
 
   onButtonClick(event) {
