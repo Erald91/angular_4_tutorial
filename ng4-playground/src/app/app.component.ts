@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
+import { trigger, state, style, transition, animate, keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,8 @@ import { DataService } from './data.service';
         </ng-template>
         </ul>
     </div>
+    <!-- Add animation to template -->
+    <p [@customAnimation]="state" (click)="triggerAnimation($event)" [class.animateParagraph]="true">Animated</p>
   `,
   styles: [`
     .largeFont {
@@ -57,7 +60,31 @@ import { DataService } from './data.service';
     .italic {
       font-style: italic;
     }
+    .animateParagraph {
+      width: 350px;
+      margin: 50px auto;
+      text-align: center;
+      padding: 20px;
+      font-size: 20px;
+      background-color: grey;
+      color: white
+    }
   `],
+  animations: [
+    trigger('customAnimation', [
+      state('small', style({
+        transform: 'scale(1)'
+      })),
+      state('large', style({
+        transform: 'scale(1.2)'
+      })),
+      transition('small <=> large', animate('300ms ease-in', keyframes([
+        style({opacity: 0, transform: 'translate(-75%)', offset: 0}),
+        style({opacity: 1, transform: 'translate(35%)', offset: .5}),
+        style({opacity: 1, transform: 'translate(0)', offset: 1})
+      ])))
+    ])
+  ],
   // styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
@@ -81,6 +108,8 @@ export class AppComponent implements OnInit {
     italic: true,
   }
   fetchedData = [];
+  state:string = 'small';
+
 
   constructor(private _dataService:DataService) { }
 
@@ -92,5 +121,9 @@ export class AppComponent implements OnInit {
 
   onButtonClick(event) {
     console.log("Event", event);
+  }
+
+  triggerAnimation(event) {
+    this.state = this.state === 'small' ? 'large' : 'small';
   }
 }
