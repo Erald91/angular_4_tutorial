@@ -4,10 +4,15 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <h1>Hey from inline templating!</h1>
+    <!-- Interpolation -->
     <p>Interpolation[Display 'age' property]: {{ sampleObject.age }}</p>
-    <ul *ngFor="let item of sampleArray">
-      <li>{{ item }}</li>
+    <!-- *ngFor structural directive -->
+    <ul>
+      <li *ngFor="let item of sampleArray">{{ item }}</li>
     </ul>
+    <!-- *ngIf structural directive; else usage -->
+    <p *ngIf="sampleBoolean; else noTmpl">Variable sampleBoolean it's true</p>
+    <ng-template #noTmpl>Variable sampleBoolean it's false</ng-template>
   `,
   styleUrls: ['./app.component.css']
 })
@@ -19,4 +24,5 @@ export class AppComponent {
     location: 'USA',
   }
   sampleArray = ['Foo', 'Bar', 'Foo'];
+  sampleBoolean = true;
 }
