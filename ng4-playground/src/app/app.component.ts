@@ -4,10 +4,15 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <h1>Hey from inline templating!</h1>
-    <p>Another line in this template</p>
+    <p>Interpolation[Display 'age' property]: {{sampleObject.age}}</p>
   `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'app';
+  sampleObject = {
+    gender: 'male',
+    age: 32,
+    location: 'USA',
+  }
 }
